@@ -27,7 +27,7 @@ order by 1,5
 
 
 -- Countries with Highest Infection Rate compared to Population
-Select Location, Population, MAX(total_cases) as HighestInfectionCount, MAX((CONVERT(float, total_cases) / NULLIF(CONVERT(float, population), 0))) *100 as PercentPopulationInfected
+Select Location, Population, MAX(CONVERT(bigint, total_cases)) as HighestInfectionCount, MAX((CONVERT(bigint, total_cases) / NULLIF(CONVERT(float, population), 0))) *100 as PercentPopulationInfected
 From CovidProject..CovidDeaths
 --Where location like '%states%'
 Group by Location, Population
@@ -45,6 +45,7 @@ order by TotalDeathCount desc
 Select location, MAX(cast(total_deaths as int)) as TotalDeathCount
 From CovidProject..CovidDeaths
 Where NULLIF(TRIM(continent),'') IS NULL
+and location not in ('World', 'European Union', 'International')
 Group by location --Empty continent cell is "World"
 order by TotalDeathCount desc
 
@@ -68,6 +69,12 @@ From CovidProject..CovidDeaths
 Where NULLIF(TRIM(continent),'') IS NOT NULL
 --Group By date
 order by 1,2
+
+--Daily Percent Population Infected by Country
+Select Location, Population, date, MAX(CONVERT(bigint, total_cases)) as HighestInfectionCount, MAX((CONVERT(bigint, total_cases) / NULLIF(CONVERT(float, population), 0))) *100 as PercentPopulationInfected
+From CovidProject..CovidDeaths
+Group by Location, Population, date
+order by PercentPopulationInfected desc
 
 
 -- Total Population vs Vaccinations: Population that has received at least one Covid Vaccine
