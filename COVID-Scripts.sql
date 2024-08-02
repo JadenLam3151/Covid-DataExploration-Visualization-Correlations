@@ -46,7 +46,7 @@ Select location, MAX(cast(total_deaths as int)) as TotalDeathCount
 From CovidProject..CovidDeaths
 Where NULLIF(TRIM(continent),'') IS NULL
 and location not in ('World', 'European Union', 'International')
-Group by location --Empty continent cell is "World"
+Group by location 
 order by TotalDeathCount desc
 
 -- Test
