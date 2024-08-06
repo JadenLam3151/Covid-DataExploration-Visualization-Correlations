@@ -43,7 +43,7 @@ GROUP BY Location, Population, date
 ORDER BY PercentPopulationInfected desc
 
 -- 5.
-SELECT location, MAX(Stringency_Index) as Stringency_Index, MAX(cast(total_tests as int)) as Total_Tests, MAX(cast(population_density as float)) as Population_Density, MAX(cast(people_vaccinated as int)) as Max_Vaccinations
+SELECT location, MAX(people_vaccinated_per_hundred) as People_Vaccinated_Per_Hundred, MAX(Stringency_Index) as Stringency_Index, MAX(cast(total_tests as int)) as Total_Tests, MAX(cast(population_density as float)) as Population_Density, MAX(cast(people_vaccinated as int)) as Max_Vaccinations
 FROM CovidProject..CovidVaccinations
 WHERE location not in ('World', 'European Union', 'International', 'Asia', 'North America', 'Europe', 'Africa', 'South America')
 GROUP BY location
